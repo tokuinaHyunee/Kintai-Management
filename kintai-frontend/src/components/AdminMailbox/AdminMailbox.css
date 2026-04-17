@@ -1,0 +1,272 @@
+/* =====================================================
+ * Admin Mailbox Panel Styles
+ * ===================================================== */
+
+.mailbox-wrap {
+  position: relative;
+}
+
+.mailbox-btn {
+  position: relative;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.85);
+  transition: background 0.12s;
+}
+.mailbox-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.mailbox-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+  border: 1.5px solid var(--navy);
+}
+
+/* ===== パネル ===== */
+.mailbox-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 360px;
+  max-height: 520px;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  border: 1px solid var(--gray2);
+  display: flex;
+  flex-direction: column;
+  z-index: 500;
+  overflow: hidden;
+}
+
+.mailbox-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 16px 11px;
+  border-bottom: 1px solid var(--gray2);
+  background: var(--gray1);
+}
+
+.mailbox-panel-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text1);
+}
+
+.mailbox-filter-row {
+  display: flex;
+  gap: 0;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--gray2);
+}
+
+.mailbox-filter-btn {
+  flex: 1;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  border: 1px solid var(--gray2);
+  background: var(--white);
+  color: var(--text3);
+  cursor: pointer;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: all 0.1s;
+}
+.mailbox-filter-btn:first-child {
+  border-radius: 6px 0 0 6px;
+}
+.mailbox-filter-btn:last-child {
+  border-radius: 0 6px 6px 0;
+  border-left: none;
+}
+.mailbox-filter-btn.active {
+  background: var(--blue1);
+  color: #fff;
+  border-color: var(--blue1);
+}
+
+.mailbox-badge-inline {
+  background: #ef4444;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  min-width: 15px;
+  height: 15px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+}
+
+.mailbox-list {
+  overflow-y: auto;
+  flex: 1;
+}
+
+.mailbox-empty {
+  text-align: center;
+  color: var(--text4);
+  padding: 32px 20px;
+  font-size: 12px;
+}
+
+/* ===== アイテム ===== */
+.mailbox-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--gray2);
+  transition: background 0.1s;
+}
+.mailbox-item:last-child { border-bottom: none; }
+.mailbox-item.unread { background: #f0f7ff; }
+.mailbox-item.read   { background: var(--white); }
+.mailbox-item:hover  { background: var(--gray1); }
+
+.mailbox-item-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.mailbox-item-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text1);
+  flex: 1;
+}
+
+.mailbox-item-date {
+  font-size: 10px;
+  color: var(--text4);
+}
+
+.mailbox-read-btn {
+  font-size: 10px;
+  padding: 2px 8px;
+  border: 1px solid var(--blue3);
+  border-radius: 10px;
+  background: var(--white);
+  color: var(--blue1);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.1s;
+  white-space: nowrap;
+}
+.mailbox-read-btn:hover {
+  background: var(--blue1);
+  color: #fff;
+}
+
+.mailbox-item-meta {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-bottom: 5px;
+}
+
+.mailbox-tag {
+  font-size: 10px;
+  padding: 1px 7px;
+  border-radius: 10px;
+  background: var(--gray2);
+  color: var(--text3);
+  font-weight: 500;
+}
+.mailbox-tag.type {
+  background: var(--blue7);
+  color: var(--blue1);
+  border: 1px solid var(--blue5);
+}
+.mailbox-tag.time {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.mailbox-item-reason {
+  font-size: 11px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+
+/* ===== 取込済バッジ ===== */
+.mailbox-imported-badge {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: var(--green-bg);
+  color: var(--green-text);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ===== アクションボタン行 ===== */
+.mailbox-item-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.mailbox-import-btn {
+  font-size: 11px;
+  padding: 4px 14px;
+  border: none;
+  border-radius: 6px;
+  background: var(--blue1);
+  color: #fff;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  transition: background 0.12s;
+}
+.mailbox-import-btn:hover:not(:disabled) { background: var(--navy); }
+.mailbox-import-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.mailbox-delete-btn {
+  font-size: 11px;
+  padding: 4px 10px;
+  border: 1px solid var(--gray3);
+  border-radius: 6px;
+  background: var(--white);
+  color: var(--text3);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.12s;
+}
+.mailbox-delete-btn:hover { background: var(--red-bg); color: var(--red-text); border-color: var(--red); }
+
+/* ===== 取込結果メッセージ ===== */
+.mailbox-result {
+  font-size: 11px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin-top: 6px;
+}
+.mailbox-result.ok { background: var(--green-bg); color: var(--green-text); }
+.mailbox-result.ng { background: var(--red-bg);   color: var(--red-text); }

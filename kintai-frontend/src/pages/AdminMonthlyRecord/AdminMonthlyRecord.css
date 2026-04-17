@@ -1,0 +1,23 @@
+.admin-monthly {
+  padding: 20px 24px;
+}
+
+.code-badge {
+  display: inline-block;
+  background: var(--gray1);
+  border: 1px solid var(--gray2);
+  border-radius: 4px;
+  padding: 2px 7px;
+  font-size: 11px;
+  font-family: monospace;
+  color: var(--text2);
+}
+
+.name-cell { font-weight: 500; color: var(--text1); }
+
+.badge-gray {
+  background: var(--gray1); color: var(--text4);
+  font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 500;
+}
+
+.overtime-cell { color: var(--red-text); font-weight: 600; }

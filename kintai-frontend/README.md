@@ -9,26 +9,26 @@ UI 언어는 일본어, 코드 주석은 한국어로 작성되어 있습니다.
 
 ### 프론트엔드
 
-| 항목             | 버전                     |
-| ---------------- | ------------------------ |
-| React            | 19                       |
-| TypeScript       | 6                        |
-| Vite             | 8                        |
-| React Router DOM | 7                        |
-| Axios            | 1.15                     |
-| 스타일링         | 자체 CSS (CSS Variables) |
+| 항목 | 버전 |
+|------|------|
+| React | 19 |
+| TypeScript | 6 |
+| Vite | 8 |
+| React Router DOM | 7 |
+| Axios | 1.15 |
+| 스타일링 | 자체 CSS (CSS Variables) |
 
 ### 백엔드
 
-| 항목                        | 버전   |
-| --------------------------- | ------ |
-| Spring Boot                 | 3.4.4  |
-| Java                        | 21     |
-| Spring Security + JWT       | -      |
-| Spring Data JPA (Hibernate) | -      |
-| MySQL                       | 8.x    |
-| Lombok                      | -      |
-| 빌드 도구                   | Gradle |
+| 항목 | 버전 |
+|------|------|
+| Spring Boot | 3.4.4 |
+| Java | 17 |
+| Spring Security + JWT | - |
+| Spring Data JPA (Hibernate) | - |
+| MySQL | 8.x |
+| Lombok | - |
+| 빌드 도구 | Gradle |
 
 ---
 
@@ -78,7 +78,7 @@ kintai-backend/               # Spring Boot 백엔드 (port 8080, context: /kint
 
 ### 사전 요구사항
 
-- Java 21 이상
+- Java 17 이상
 - Node.js 18 이상
 - MySQL 8.x
 
@@ -157,22 +157,22 @@ VALUES (
 
 ### 사원 화면
 
-| 기능             | 설명                                                 |
-| ---------------- | ---------------------------------------------------- |
-| 출근 / 퇴근      | 버튼 클릭으로 현재 시각 타임스탬프 기록              |
-| 외출 / 외출 복귀 | 업무 중 외출 기록                                    |
-| 업무 내용 메모   | 당일 업무 내용 자유 입력 및 저장                     |
-| 월간 근태 실적   | 달력 + 주간 집계 바 + 근무기록 목록 (월간·주간 전환) |
-| CSV 송신         | 근무표 CSV 파일을 관리자 메일함으로 전송             |
+| 기능 | 설명 |
+|------|------|
+| 출근 / 퇴근 | 버튼 클릭으로 현재 시각 타임스탬프 기록 |
+| 외출 / 외출 복귀 | 업무 중 외출 기록 |
+| 업무 내용 메모 | 당일 업무 내용 자유 입력 및 저장 |
+| 월간 근태 실적 | 달력 + 주간 집계 바 + 근무기록 목록 (월간·주간 전환) |
+| CSV 송신 | 근무표 CSV 파일을 관리자 메일함으로 전송 |
 
 ### 관리자 화면
 
-| 기능              | 설명                                                       |
-| ----------------- | ---------------------------------------------------------- |
+| 기능 | 설명 |
+|------|------|
 | 전 사원 월간 실적 | 전체 사원 월별 출근일수·노동시간·잔업시간 조회 및 PDF 출력 |
-| CSV 업로드        | CSV 파일 미리보기 후 근태 데이터 일괄 등록                 |
-| CSV 메일함        | 사원 송신 CSV 수신 → 업로드 탭에서 내용 확인 후 등록       |
-| 사원 관리         | 계정 생성 (8자리 사원번호 + 자동 비밀번호 발급) / 삭제     |
+| CSV 업로드 | CSV 파일 미리보기 후 근태 데이터 일괄 등록 |
+| CSV 메일함 | 사원 송신 CSV 수신 → 업로드 탭에서 내용 확인 후 등록 |
+| 사원 관리 | 계정 생성 (8자리 사원번호 + 자동 비밀번호 발급) / 삭제 |
 
 ---
 
@@ -202,14 +202,14 @@ VALUES (
 
 일본식 근무표 CSV 형식을 지원합니다.
 
-| 헤더 패턴                        | 매핑 필드        | 비고                                  |
-| -------------------------------- | ---------------- | ------------------------------------- |
-| `氏名：홍길동` (메타 행)         | 사원명 자동 추출 | 괄호 내 로마자 자동 제거              |
-| `月日` / `日付` / `勤務日`       | 근무일           | `4月1日(水)` → `YYYY-MM-DD` 자동 변환 |
-| `始業時刻` / `出勤`              | 출근 시각        | `H:mm` 또는 `HH:mm`                   |
-| `終業時刻` / `退勤`              | 퇴근 시각        | 동상                                  |
-| `休憩` / `休憩(分)`              | 휴식 시간        | `1:00` → `60`분 자동 변환             |
-| `備考` / `業務内容` / `納入物等` | 업무 메모        |                                       |
+| 헤더 패턴 | 매핑 필드 | 비고 |
+|-----------|-----------|------|
+| `氏名：홍길동` (메타 행) | 사원명 자동 추출 | 괄호 내 로마자 자동 제거 |
+| `月日` / `日付` / `勤務日` | 근무일 | `4月1日(水)` → `YYYY-MM-DD` 자동 변환 |
+| `始業時刻` / `出勤` | 출근 시각 | `H:mm` 또는 `HH:mm` |
+| `終業時刻` / `退勤` | 퇴근 시각 | 동상 |
+| `休憩` / `休憩(分)` | 휴식 시간 | `1:00` → `60`분 자동 변환 |
+| `備考` / `業務内容` / `納入物等` | 업무 메모 | |
 
 - 휴식 시간 미지정 시: 6시간 초과 근무에 60분 자동 공제
 - 사원명이 DB와 불일치할 경우: 업로드 화면에서 경고 모달 표시
@@ -220,62 +220,62 @@ VALUES (
 
 ### 인증
 
-| 메서드 | URL                 | 설명                       |
-| ------ | ------------------- | -------------------------- |
-| POST   | `/api/auth/login`   | 로그인 / JWT 발급          |
-| POST   | `/api/auth/refresh` | 토큰 갱신 (유효 토큰 필요) |
+| 메서드 | URL | 설명 |
+|--------|-----|------|
+| POST | `/api/auth/login` | 로그인 / JWT 발급 |
+| POST | `/api/auth/refresh` | 토큰 갱신 (유효 토큰 필요) |
 
 ### 사원 근태 (인증 필요)
 
-| 메서드 | URL                             | 설명                   |
-| ------ | ------------------------------- | ---------------------- |
-| GET    | `/api/attendance?month=YYYY-MM` | 월간 근태 목록         |
-| POST   | `/api/attendance/clock-in`      | 출근                   |
-| POST   | `/api/attendance/clock-out`     | 퇴근                   |
-| POST   | `/api/attendance/go-out`        | 외출                   |
-| POST   | `/api/attendance/go-out-return` | 외출 복귀              |
-| POST   | `/api/attendance/work-memo`     | 업무 내용 저장         |
-| POST   | `/api/attendance/submit-csv`    | CSV 관리자 메일함 송신 |
+| 메서드 | URL | 설명 |
+|--------|-----|------|
+| GET | `/api/attendance?month=YYYY-MM` | 월간 근태 목록 |
+| POST | `/api/attendance/clock-in` | 출근 |
+| POST | `/api/attendance/clock-out` | 퇴근 |
+| POST | `/api/attendance/go-out` | 외출 |
+| POST | `/api/attendance/go-out-return` | 외출 복귀 |
+| POST | `/api/attendance/work-memo` | 업무 내용 저장 |
+| POST | `/api/attendance/submit-csv` | CSV 관리자 메일함 송신 |
 
 ### 집계
 
-| 메서드 | URL                                  | 설명         |
-| ------ | ------------------------------------ | ------------ |
-| GET    | `/api/summary/monthly?month=YYYY-MM` | 월간 집계    |
-| GET    | `/api/summary/export?month=YYYY-MM`  | CSV 내보내기 |
+| 메서드 | URL | 설명 |
+|--------|-----|------|
+| GET | `/api/summary/monthly?month=YYYY-MM` | 월간 집계 |
+| GET | `/api/summary/export?month=YYYY-MM` | CSV 내보내기 |
 
 ### 관리자 (ADMIN 권한 필요)
 
-| 메서드 | URL                                        | 설명               |
-| ------ | ------------------------------------------ | ------------------ |
-| GET    | `/api/admin/monthly-summary?month=YYYY-MM` | 전 사원 월간 실적  |
-| GET    | `/api/admin/accounts`                      | 사원 목록          |
-| POST   | `/api/admin/accounts`                      | 사원 등록          |
-| DELETE | `/api/admin/accounts/{id}`                 | 사원 삭제          |
-| POST   | `/api/admin/import/attendance`             | CSV 근태 일괄 등록 |
+| 메서드 | URL | 설명 |
+|--------|-----|------|
+| GET | `/api/admin/monthly-summary?month=YYYY-MM` | 전 사원 월간 실적 |
+| GET | `/api/admin/accounts` | 사원 목록 |
+| POST | `/api/admin/accounts` | 사원 등록 |
+| DELETE | `/api/admin/accounts/{id}` | 사원 삭제 |
+| POST | `/api/admin/import/attendance` | CSV 근태 일괄 등록 |
 
 ### CSV 메일함 (ADMIN 권한 필요)
 
-| 메서드 | URL                                             | 설명               |
-| ------ | ----------------------------------------------- | ------------------ |
-| GET    | `/api/admin/csv-submissions/pending-count`      | 미확인 건수        |
-| GET    | `/api/admin/csv-submissions?status=PENDING`     | 수신 목록          |
-| GET    | `/api/admin/csv-submissions/{id}/content`       | CSV 원본 내용 조회 |
-| POST   | `/api/admin/csv-submissions/{id}/mark-imported` | 등록 완료 마킹     |
-| DELETE | `/api/admin/csv-submissions/{id}`               | 삭제               |
+| 메서드 | URL | 설명 |
+|--------|-----|------|
+| GET | `/api/admin/csv-submissions/pending-count` | 미확인 건수 |
+| GET | `/api/admin/csv-submissions?status=PENDING` | 수신 목록 |
+| GET | `/api/admin/csv-submissions/{id}/content` | CSV 원본 내용 조회 |
+| POST | `/api/admin/csv-submissions/{id}/mark-imported` | 등록 완료 마킹 |
+| DELETE | `/api/admin/csv-submissions/{id}` | 삭제 |
 
 ---
 
 ## DB 테이블 구조
 
-| 테이블                 | 설명                                                     |
-| ---------------------- | -------------------------------------------------------- |
-| `employee`             | 사원 기본 정보 (이름, 부서, 활성 여부)                   |
-| `account`              | 로그인 계정 (사원번호, 비밀번호 BCrypt, 권한 USER/ADMIN) |
-| `work_time`            | 근태 기록 (출근·퇴근·외출·휴식·노동시간·잔업시간·메모)   |
-| `csv_submission`       | 사원 송신 CSV 원본 보관 (상태: PENDING / IMPORTED)       |
-| `batch_import_history` | CSV 일괄 등록 이력                                       |
-| `correction_request`   | (레거시 미사용) 수정 신청 이력                           |
+| 테이블 | 설명 |
+|--------|------|
+| `employee` | 사원 기본 정보 (이름, 부서, 활성 여부) |
+| `account` | 로그인 계정 (사원번호, 비밀번호 BCrypt, 권한 USER/ADMIN) |
+| `work_time` | 근태 기록 (출근·퇴근·외출·휴식·노동시간·잔업시간·메모) |
+| `csv_submission` | 사원 송신 CSV 원본 보관 (상태: PENDING / IMPORTED) |
+| `batch_import_history` | CSV 일괄 등록 이력 |
+| `correction_request` | (레거시 미사용) 수정 신청 이력 |
 
 ---
 
@@ -294,9 +294,9 @@ VALUES (
 
 ## 권한 체계
 
-| 권한             | 로그인 URL     | 접근 가능 화면                                  |
-| ---------------- | -------------- | ----------------------------------------------- |
-| `USER` (사원)    | `/login`       | 출퇴근 대시보드, 월간 실적, CSV 송신            |
+| 권한 | 로그인 URL | 접근 가능 화면 |
+|------|-----------|---------------|
+| `USER` (사원) | `/login` | 출퇴근 대시보드, 월간 실적, CSV 송신 |
 | `ADMIN` (관리자) | `/admin/login` | 전 사원 실적, CSV 업로드, 사원 관리, CSV 메일함 |
 
 ---

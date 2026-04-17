@@ -5,13 +5,13 @@ import type { CsvSubmission } from "../../types";
 import "./AdminMailbox.css";
 
 export default function AdminMailbox() {
-  const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
-  const [items, setItems] = useState<CsvSubmission[]>([]);
-  const [pending, setPending] = useState(0);
-  const [filter, setFilter] = useState("PENDING");
-  const [loading, setLoading] = useState(false);
-  const [opening, setOpening] = useState<number | null>(null);
+  const navigate   = useNavigate();
+  const [open,     setOpen]     = useState(false);
+  const [items,    setItems]    = useState<CsvSubmission[]>([]);
+  const [pending,  setPending]  = useState(0);
+  const [filter,   setFilter]   = useState("PENDING");
+  const [loading,  setLoading]  = useState(false);
+  const [opening,  setOpening]  = useState<number | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
   // 未処理件数ポーリング（30秒ごと）
@@ -37,9 +37,7 @@ export default function AdminMailbox() {
     try {
       const res = await csvMailboxApi.getPendingCount();
       setPending(res.data.count ?? 0);
-    } catch {
-      /* ignore */
-    }
+    } catch { /* ignore */ }
   };
 
   const fetchList = async (status: string) => {
@@ -74,8 +72,8 @@ export default function AdminMailbox() {
       setOpen(false);
       navigate("/admin/upload", {
         state: {
-          csvContent: res.data.csvContent,
-          fileName: res.data.fileName,
+          csvContent:   res.data.csvContent,
+          fileName:     res.data.fileName,
           submissionId: item.id,
           employeeName: res.data.employeeName,
         },
@@ -92,45 +90,24 @@ export default function AdminMailbox() {
       await csvMailboxApi.deleteSubmission(id);
       setItems((prev) => prev.filter((it) => it.id !== id));
       await fetchPending();
-    } catch {
-      /* ignore */
-    }
+    } catch { /* ignore */ }
   };
 
   return (
     <div className="mailbox-wrap" ref={panelRef}>
-      <button
-        className="mailbox-btn"
-        onClick={handleOpen}
-        title="CSVメールボックス"
-      >
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-          <polyline points="22,6 12,13 2,6" />
+      <button className="mailbox-btn" onClick={handleOpen} title="CSVメールボックス">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
         </svg>
-        {pending > 0 && (
-          <span className="mailbox-badge">
-            {pending > 99 ? "99+" : pending}
-          </span>
-        )}
+        {pending > 0 && <span className="mailbox-badge">{pending > 99 ? "99+" : pending}</span>}
       </button>
 
       {open && (
         <div className="mailbox-panel">
           <div className="mailbox-panel-header">
             <span className="mailbox-panel-title">勤務表CSVメールボックス</span>
-            <button className="modal-close" onClick={() => setOpen(false)}>
-              ✕
-            </button>
+            <button className="modal-close" onClick={() => setOpen(false)}>✕</button>
           </div>
 
           <div className="mailbox-filter-row">
@@ -138,10 +115,7 @@ export default function AdminMailbox() {
               className={`mailbox-filter-btn ${filter === "PENDING" ? "active" : ""}`}
               onClick={() => handleFilter("PENDING")}
             >
-              未確認{" "}
-              {pending > 0 && (
-                <span className="mailbox-badge-inline">{pending}</span>
-              )}
+              未確認 {pending > 0 && <span className="mailbox-badge-inline">{pending}</span>}
             </button>
             <button
               className={`mailbox-filter-btn ${filter === "" ? "active" : ""}`}
@@ -158,17 +132,10 @@ export default function AdminMailbox() {
               <div className="mailbox-empty">CSVの受信はありません</div>
             ) : (
               items.map((item) => (
-                <div
-                  key={item.id}
-                  className={`mailbox-item ${item.status === "PENDING" ? "unread" : "read"}`}
-                >
+                <div key={item.id} className={`mailbox-item ${item.status === "PENDING" ? "unread" : "read"}`}>
                   <div className="mailbox-item-top">
-                    <span className="mailbox-item-name">
-                      {item.employeeName}
-                    </span>
-                    <span className="mailbox-item-date">
-                      {item.submittedAt}
-                    </span>
+                    <span className="mailbox-item-name">{item.employeeName}</span>
+                    <span className="mailbox-item-date">{item.submittedAt}</span>
                     {item.status === "IMPORTED" && (
                       <span className="mailbox-imported-badge">登録済</span>
                     )}
@@ -176,9 +143,7 @@ export default function AdminMailbox() {
 
                   <div className="mailbox-item-meta">
                     <span className="mailbox-tag">{item.fileName}</span>
-                    <span className="mailbox-tag type">
-                      約{item.recordCount}件
-                    </span>
+                    <span className="mailbox-tag type">約{item.recordCount}件</span>
                   </div>
 
                   <div className="mailbox-item-actions">

@@ -1,0 +1,17 @@
+/* AdminLogin は Login.css のクラスを共用し、差分だけここに定義 */
+
+.admin-login-bg {
+  background: linear-gradient(135deg, #1a3a51 0%, #7c3aed 60%, #a78bfa 100%);
+}
+
+.admin-logo-mark {
+  background: #5b21b6 !important;
+}
+
+.admin-login-btn {
+  background: #5b21b6 !important;
+}
+
+.admin-login-btn:hover:not(:disabled) {
+  background: #4c1d95 !important;
+}
