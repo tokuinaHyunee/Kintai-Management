@@ -1,0 +1,59 @@
+# ===== Backend (Gradle / Spring Boot) =====
+kintai-backend/build/
+kintai-backend/.gradle/
+kintai-backend/bin/
+kintai-backend/out/
+kintai-backend/*.jar
+kintai-backend/*.war
+kintai-backend/*.class
+kintai-backend/gradle/wrapper/gradle-wrapper.jar
+
+# Spring Boot 설정 (실제 환경변수 포함 파일 — .example 파일만 커밋)
+kintai-backend/src/main/resources/application.properties
+kintai-backend/src/main/resources/application-local.properties
+kintai-backend/src/main/resources/application-local.yml
+kintai-backend/src/main/resources/application-prod.properties
+kintai-backend/src/main/resources/application-prod.yml
+
+# ===== Frontend (Node / Vite) =====
+kintai-frontend/node_modules/
+kintai-frontend/dist/
+kintai-frontend/.vite/
+kintai-frontend/coverage/
+
+# 환경변수 파일
+.env
+.env.local
+.env.*.local
+kintai-frontend/.env
+kintai-frontend/.env.local
+kintai-frontend/.env.*.local
+
+# ===== IDE / Editor =====
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ===== OS =====
+desktop.ini
+ehthumbs.db
+
+# ===== Logs =====
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===== Claude Code =====
+.claude/
+
+# ===== 기타 =====
+*.tmp
+*.bak
+*.orig

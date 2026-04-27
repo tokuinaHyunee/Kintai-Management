@@ -1,0 +1,164 @@
+.admin-accounts {
+  padding: 20px 24px;
+}
+
+.account-form-card {
+  margin-top: 14px;
+}
+
+.account-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text2);
+  letter-spacing: 0.3px;
+}
+
+.form-hint {
+  font-size: 10px;
+  color: var(--text4);
+  margin-top: 2px;
+}
+
+.required { color: var(--red-text); }
+
+.form-msg {
+  font-size: 12px;
+  padding: 8px 12px;
+  border-radius: var(--radius);
+}
+.form-msg.error   { background: var(--red-bg);  color: var(--red-text);  border: 1px solid #fca5a5; }
+.form-msg.success { background: #f0fdf4;         color: #16a34a;          border: 1px solid #bbf7d0; }
+
+.form-actions { display: flex; justify-content: flex-end; }
+
+/* 新規登録結果カード */
+.new-account-card {
+  margin-top: 14px;
+  border: 1px solid #a3e635;
+  background: #f7fee7;
+}
+.new-account-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #3f6212;
+  margin-bottom: 12px;
+}
+.new-account-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.new-account-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.new-account-label {
+  font-size: 11px;
+  color: #4d7c0f;
+  width: 130px;
+  flex-shrink: 0;
+}
+.new-account-value {
+  font-size: 13px;
+  color: #1e3a5f;
+}
+.new-account-value.mono      { font-family: monospace; }
+.new-account-value.highlight { font-family: monospace; font-weight: 700; font-size: 16px; color: #dc2626; letter-spacing: 1px; }
+
+/* パスワードセル */
+.pwd-cell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pwd-mask {
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--text3);
+}
+.mono { font-family: monospace; }
+.btn-icon {
+  font-size: 10px;
+  padding: 2px 7px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: var(--surface2);
+  color: var(--text3);
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-icon:hover { background: var(--gray1); color: var(--text1); }
+
+.count-badge {
+  display: inline-block;
+  margin-left: 8px;
+  background: var(--blue7);
+  color: var(--blue1);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 10px;
+  border: 1px solid var(--blue5);
+}
+
+.code-badge {
+  display: inline-block;
+  background: var(--gray1);
+  border: 1px solid var(--gray2);
+  border-radius: 4px;
+  padding: 2px 7px;
+  font-size: 11px;
+  font-family: monospace;
+  color: var(--text2);
+}
+
+.name-cell { font-weight: 500; color: var(--text1); }
+
+.badge-admin {
+  background: #fef3c7; color: #92400e;
+  font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 600;
+}
+.badge-user {
+  background: var(--blue7); color: var(--blue1);
+  font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 500;
+}
+.badge-gray {
+  background: var(--gray1); color: var(--text4);
+  font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 500;
+}
+
+.btn-danger {
+  background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5;
+  padding: 4px 10px; border-radius: var(--radius);
+  font-size: 11px; font-weight: 500; cursor: pointer; font-family: inherit;
+  transition: background 0.12s;
+}
+.btn-danger:hover { background: #fca5a5; }
+
+.delete-confirm { display: flex; align-items: center; gap: 6px; }
+
+.delete-warn-badge {
+  display: inline-block;
+  background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5;
+  border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 600; white-space: nowrap;
+}

@@ -1,0 +1,86 @@
+/* =====================================================
+ * Report Page Styles
+ * ===================================================== */
+
+.report-page {
+  padding: 20px 24px;
+}
+
+.report-message {
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  font-size: 12px;
+  margin-bottom: 14px;
+}
+
+.report-message.success {
+  background: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+}
+
+.report-message.error {
+  background: var(--red-bg);
+  color: var(--red-text);
+  border: 1px solid #fca5a5;
+}
+
+.report-card {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+}
+
+.report-card-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.csv-icon {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.report-card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text1);
+}
+
+.report-card-desc {
+  font-size: 13px;
+  color: var(--text3);
+  line-height: 1.6;
+}
+
+.report-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.report-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  background: var(--gray1);
+  border: 1px solid var(--gray2);
+  border-radius: 10px;
+  font-size: 11px;
+  color: var(--text3);
+}
+
+.report-btn {
+  margin-top: auto;
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+}
