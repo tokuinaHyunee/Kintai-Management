@@ -14,7 +14,6 @@ public class AccountListDto {
     private String employeeName;
     private String department;
     private String loginId;
-    private String passwordPlain;
     private String role;
     private Integer activeFlag;
 
@@ -24,7 +23,6 @@ public class AccountListDto {
         dto.employeeName = a.getEmployee().getEmployeeName();
         dto.department   = a.getEmployee().getDepartment();
         dto.loginId      = a.getLoginId();
-        dto.passwordPlain = a.getPasswordPlain();
         dto.role         = a.getRole();
         dto.activeFlag   = a.getActiveFlag();
         return dto;

@@ -2,10 +2,8 @@ package com.example.kintai.controller;
 
 import com.example.kintai.dto.EmployeeMonthlySummaryDto;
 import com.example.kintai.entity.Account;
-import com.example.kintai.entity.Employee;
 import com.example.kintai.entity.WorkTime;
 import com.example.kintai.repository.AccountRepository;
-import com.example.kintai.repository.EmployeeRepository;
 import com.example.kintai.repository.WorkTimeRepository;
 import com.example.kintai.util.DateTimeUtil;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.YearMonth;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -22,27 +21,29 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AdminController {
 
-    private final EmployeeRepository employeeRepository;
     private final WorkTimeRepository workTimeRepository;
     private final AccountRepository accountRepository;
 
+    // N+1 解消: アクティブ社員アカウント1回 + 勤務記録1回 = 計2クエリ
     @GetMapping("/monthly-summary")
     @Transactional(readOnly = true)
     public ResponseEntity<List<EmployeeMonthlySummaryDto>> getMonthlySummary(@RequestParam String month) {
         YearMonth ym = YearMonth.parse(month);
 
-        List<EmployeeMonthlySummaryDto> result = employeeRepository.findByActiveFlag(1).stream().map(emp -> {
-            List<WorkTime> records = workTimeRepository
-                    .findByEmployeeEmployeeIdAndWorkDateBetweenOrderByWorkDateAsc(
-                            emp.getEmployeeId(), ym.atDay(1), ym.atEndOfMonth());
+        List<Account> accounts = accountRepository.findActiveWithEmployee();
 
-            String loginId = accountRepository.findByEmployeeEmployeeId(emp.getEmployeeId())
-                    .map(Account::getLoginId).orElse("—");
+        Map<Long, List<WorkTime>> byEmpId = workTimeRepository
+                .findWithEmployeeByWorkDateBetween(ym.atDay(1), ym.atEndOfMonth())
+                .stream()
+                .collect(Collectors.groupingBy(w -> w.getEmployee().getEmployeeId()));
 
+        List<EmployeeMonthlySummaryDto> result = accounts.stream().map(acc -> {
+            Long empId = acc.getEmployee().getEmployeeId();
+            List<WorkTime> records = byEmpId.getOrDefault(empId, List.of());
             return new EmployeeMonthlySummaryDto(
-                    loginId,
-                    emp.getEmployeeName(),
-                    emp.getDepartment(),
+                    acc.getLoginId(),
+                    acc.getEmployee().getEmployeeName(),
+                    acc.getEmployee().getDepartment(),
                     DateTimeUtil.countWorkDays(records),
                     DateTimeUtil.toHours(DateTimeUtil.sumWorkMinutes(records)),
                     DateTimeUtil.toHours(DateTimeUtil.sumOvertimeMinutes(records)));

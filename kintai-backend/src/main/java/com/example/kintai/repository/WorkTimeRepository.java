@@ -4,25 +4,40 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import com.example.kintai.entity.WorkTime;
 
 @Repository
 public interface WorkTimeRepository extends JpaRepository<WorkTime, Long> {
-	
-	//社員IDと勤務日で検索（重複チェック用）
-	Optional<WorkTime> findByEmployeeEmployeeIdAndWorkDate(Long employeeId, LocalDate workDate);
-	
-	//社員IDで勤務記録一覧取得
-	List<WorkTime> findByEmployeeEmployeeIdOrderByWorkDateDesc(Long employeeId);
-	//社員IDと期間で勤務記録取得（月次集計用）
-	List<WorkTime> findByEmployeeEmployeeIdAndWorkDateBetweenOrderByWorkDateAsc(
+
+    Optional<WorkTime> findByEmployeeEmployeeIdAndWorkDate(Long employeeId, LocalDate workDate);
+
+    List<WorkTime> findByEmployeeEmployeeIdOrderByWorkDateDesc(Long employeeId);
+
+    List<WorkTime> findByEmployeeEmployeeIdAndWorkDateBetweenOrderByWorkDateAsc(
             Long employeeId, LocalDate startDate, LocalDate endDate);
-	
-	//全社員の特定期間の勤務記録取得（管理者用）
-	List<WorkTime> findByWorkDateBetweenOrderByWorkDateAsc(
+
+    // N+1 解消: GoOutRecord を JOIN FETCH して1クエリで取得
+    @Query("SELECT w FROM WorkTime w LEFT JOIN FETCH w.goOutRecords" +
+           " WHERE w.employee.employeeId = :empId" +
+           " AND w.workDate BETWEEN :start AND :end" +
+           " ORDER BY w.workDate ASC")
+    List<WorkTime> findWithGoOutRecordsByEmployeeAndDateBetween(
+            @Param("empId") Long empId,
+            @Param("start") LocalDate start,
+            @Param("end") LocalDate end);
+
+    // 管理者月次集計用: 全社員の勤務記録を Employee ごと JOIN FETCH (N+1解消)
+    @Query("SELECT w FROM WorkTime w JOIN FETCH w.employee" +
+           " WHERE w.workDate BETWEEN :start AND :end")
+    List<WorkTime> findWithEmployeeByWorkDateBetween(
+            @Param("start") LocalDate start,
+            @Param("end") LocalDate end);
+
+    List<WorkTime> findByWorkDateBetweenOrderByWorkDateAsc(
             LocalDate startDate, LocalDate endDate);
 
-	// 社員の全勤務記録を削除（アカウント完全削除用）
-	void deleteByEmployeeEmployeeId(Long employeeId);
+    void deleteByEmployeeEmployeeId(Long employeeId);
 }

@@ -32,7 +32,8 @@ export interface MonthlySummary {
   workDays: number;
   totalHours: number;
   overtimeHours: number;
-  paidLeaveDays: number;
+  paidLeaveDays: number;       // 今月の有給取得日数
+  remainingAnnualLeave: number; // 今年の残年次有給日数
 }
 
 export interface EmployeeMonthlySummary {
@@ -49,7 +50,6 @@ export interface AccountListItem {
   employeeName: string;
   department: string | null;
   loginId: string;
-  passwordPlain: string | null;
   role: Role;
   activeFlag: number;
 }

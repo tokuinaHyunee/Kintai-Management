@@ -3,21 +3,18 @@ package com.example.kintai.entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-@Table(name = "work_time")
+@Table(name = "work_time", indexes = {
+    @Index(name = "idx_wt_emp_date", columnList = "employee_id, work_date")
+})
 @Getter
 @Setter
 @NoArgsConstructor
@@ -69,6 +66,11 @@ public class WorkTime {
     // 残業時間（分）
     @Column(name = "overtime_minutes")
     private Integer overtimeMinutes;
+
+    // 外出記録（1日複数回対応）
+    @OneToMany(mappedBy = "workTime", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("outTime ASC")
+    private List<GoOutRecord> goOutRecords = new ArrayList<>();
 
     // 登録日時
     @Column(name = "created_at", nullable = false)

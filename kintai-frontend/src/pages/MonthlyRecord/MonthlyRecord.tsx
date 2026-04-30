@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import { summaryApi, attendanceApi } from "../../api/api";
-import type { User, WorkTimeRecord, MonthlySummary, WeekSummary } from "../../types";
+import type { WorkTimeRecord, MonthlySummary, WeekSummary } from "../../types";
 import { formatLocalDate, formatLocalMonth } from "../../utils/date";
 import "./MonthlyRecord.css";
-
-interface Props { user: User | null; }
 
 const fmtMin = (min: number | null): string => {
   if (!min) return "—";
@@ -17,7 +15,7 @@ const fmtHours = (h: number | null | undefined): string => {
   return `${hrs}h ${String(min).padStart(2, "0")}m`;
 };
 
-export default function MonthlyRecord(_: Props) {
+export default function MonthlyRecord() {
   const today = new Date();
   const [month,      setMonth]      = useState(formatLocalMonth(today));
   const [viewMode,   setViewMode]   = useState<"monthly" | "weekly">("monthly");
@@ -25,8 +23,18 @@ export default function MonthlyRecord(_: Props) {
   const [summary,    setSummary]    = useState<MonthlySummary | null>(null);
   const [records,    setRecords]    = useState<WorkTimeRecord[]>([]);
   const [loading,    setLoading]    = useState(false);
+  const [holidays,   setHolidays]   = useState<Record<string, string>>({});
 
   useEffect(() => { fetchData(); setWeekOffset(0); }, [month]);
+
+  const year = month.split("-")[0];
+
+  useEffect(() => {
+    fetch(`https://holidays-jp.github.io/api/v1/${year}/date.json`)
+      .then((r) => r.json())
+      .then((data: Record<string, string>) => setHolidays(data))
+      .catch(() => setHolidays({}));
+  }, [year]);
 
   const fetchData = async () => {
     setLoading(true);
@@ -171,33 +179,46 @@ export default function MonthlyRecord(_: Props) {
               <div key={d} className={`cal-head ${i === 0 ? "sun" : i === 6 ? "sat" : ""}`}>{d}</div>
             ))}
             {calendar.map((d, idx) => {
-              const rec        = getRecordForDate(d);
-              const isWork     = !!(rec && rec.startTime);
-              const leaveType  = rec?.leaveType ?? null;
-              const isAnnual   = leaveType === "ANNUAL";
-              const isHalf     = leaveType === "HALF_MORNING" || leaveType === "HALF_AFTERNOON";
-              const isSick     = leaveType === "SICK";
-              const isAbsent   = leaveType === "ABSENT";
-              const leaveLabel = isAnnual ? "有給" : isHalf ? "半休" : isSick ? "病休" : null;
-              const leaveCls   = isAnnual ? "annual" : isHalf ? "half" : isSick ? "sick" : isAbsent ? "absent" : "";
+              const rec         = getRecordForDate(d);
+              const dateStr     = d ? getDateStr(d) : "";
+              const holidayName = d ? (holidays[dateStr] ?? null) : null;
+              const isHoliday   = !!holidayName;
+              const isWork      = !!(rec && rec.startTime);
+              const leaveType   = rec?.leaveType ?? null;
+              const isAnnual    = leaveType === "ANNUAL";
+              const isHalf      = leaveType === "HALF_MORNING" || leaveType === "HALF_AFTERNOON";
+              const isSick      = leaveType === "SICK";
+              const isAbsent    = leaveType === "ABSENT";
+              const leaveLabel  = isAnnual ? "有給" : isHalf ? "半休" : isSick ? "病休" : null;
+              const leaveCls    = isAnnual ? "annual" : isHalf ? "half" : isSick ? "sick" : isAbsent ? "absent" : "";
+              const holidayCls  = isHoliday && !leaveCls && !isWork ? "holiday" : "";
               return (
-                <div key={idx} className={`cal-cell ${!d ? "empty" : ""} ${isToday(d) ? "today" : ""} ${isWork && !isToday(d) && !leaveCls ? "work" : ""} ${leaveCls} ${isWeekend(idx) && d ? "weekend" : ""}`}>
+                <div
+                  key={idx}
+                  className={`cal-cell ${!d ? "empty" : ""} ${isToday(d) ? "today" : ""} ${isWork && !isToday(d) && !leaveCls && !isHoliday ? "work" : ""} ${leaveCls} ${holidayCls} ${isWeekend(idx) && d ? "weekend" : ""}`}
+                  title={holidayName ?? undefined}
+                >
                   {d && (
                     isToday(d)
                       ? <span className="today-dot">{d}</span>
-                      : <span className="cal-day">{d}{leaveLabel && <span className="leave-label">{leaveLabel}</span>}</span>
+                      : <span className="cal-day">
+                          {d}
+                          {leaveLabel && <span className="leave-label">{leaveLabel}</span>}
+                          {isHoliday && !leaveLabel && <span className="leave-label holiday-label">{holidayName!.length > 4 ? holidayName!.slice(0, 3) + "…" : holidayName}</span>}
+                        </span>
                   )}
                 </div>
               );
             })}
           </div>
           <div className="cal-legend">
-            <span><span className="legend-dot work"   />出勤</span>
-            <span><span className="legend-dot today"  />今日</span>
-            <span><span className="legend-dot annual" />有給</span>
-            <span><span className="legend-dot half"   />半休</span>
-            <span><span className="legend-dot sick"   />病休</span>
-            <span><span className="legend-dot absent" />欠勤</span>
+            <span><span className="legend-dot work"    />出勤</span>
+            <span><span className="legend-dot today"   />今日</span>
+            <span><span className="legend-dot holiday" />祝日</span>
+            <span><span className="legend-dot annual"  />有給</span>
+            <span><span className="legend-dot half"    />半休</span>
+            <span><span className="legend-dot sick"    />病休</span>
+            <span><span className="legend-dot absent"  />欠勤</span>
           </div>
         </div>
       </div>

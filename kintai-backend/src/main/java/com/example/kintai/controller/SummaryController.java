@@ -1,7 +1,9 @@
 package com.example.kintai.controller;
 
 import com.example.kintai.dto.MonthlySummaryDto;
+import com.example.kintai.entity.LeaveRequest;
 import com.example.kintai.entity.WorkTime;
+import com.example.kintai.repository.LeaveRequestRepository;
 import com.example.kintai.repository.WorkTimeRepository;
 import com.example.kintai.util.DateTimeUtil;
 import com.example.kintai.util.EmployeeResolver;
@@ -20,6 +22,7 @@ import java.util.List;
 public class SummaryController {
 
     private final WorkTimeRepository workTimeRepository;
+    private final LeaveRequestRepository leaveRequestRepository;
     private final EmployeeResolver employeeResolver;
 
     @GetMapping("/monthly")
@@ -31,11 +34,35 @@ public class SummaryController {
                 .findByEmployeeEmployeeIdAndWorkDateBetweenOrderByWorkDateAsc(
                         employee.getEmployeeId(), ym.atDay(1), ym.atEndOfMonth());
 
+        // 今年の承認済み有給休暇を集計
+        List<LeaveRequest> yearLeaves = leaveRequestRepository
+                .findByEmployeeEmployeeIdAndStatusAndLeaveDateBetween(
+                        employee.getEmployeeId(), "APPROVED",
+                        LocalDate.of(ym.getYear(), 1, 1),
+                        LocalDate.of(ym.getYear(), 12, 31));
+
+        double usedThisYear = 0;
+        double usedThisMonth = 0;
+        for (LeaveRequest lr : yearLeaves) {
+            // 半休は0.5日、それ以外は1日としてカウント
+            double dayVal = "HALF_MORNING".equals(lr.getLeaveType()) || "HALF_AFTERNOON".equals(lr.getLeaveType()) ? 0.5 : 1.0;
+            if ("ANNUAL".equals(lr.getLeaveType()) || "HALF_MORNING".equals(lr.getLeaveType()) || "HALF_AFTERNOON".equals(lr.getLeaveType())) {
+                usedThisYear += dayVal;
+                if (lr.getLeaveDate().getMonthValue() == ym.getMonthValue()) {
+                    usedThisMonth += dayVal;
+                }
+            }
+        }
+
+        int total = employee.getAnnualLeaveTotal() != null ? employee.getAnnualLeaveTotal() : 10;
+        double remaining = Math.max(0, total - usedThisYear);
+
         return ResponseEntity.ok(new MonthlySummaryDto(
                 DateTimeUtil.countWorkDays(records),
                 DateTimeUtil.toHours(DateTimeUtil.sumWorkMinutes(records)),
                 DateTimeUtil.toHours(DateTimeUtil.sumOvertimeMinutes(records)),
-                10));
+                usedThisMonth,
+                remaining));
     }
 
     @GetMapping("/weekly")
@@ -53,7 +80,7 @@ public class SummaryController {
                 DateTimeUtil.countWorkDays(records),
                 DateTimeUtil.toHours(DateTimeUtil.sumWorkMinutes(records)),
                 DateTimeUtil.toHours(DateTimeUtil.sumOvertimeMinutes(records)),
-                0));
+                0, 0));
     }
 
     @GetMapping("/export")

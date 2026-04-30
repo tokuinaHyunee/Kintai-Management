@@ -194,6 +194,14 @@
   background: #fff7ed;
   color: #9a3412;
 }
+.cal-cell.holiday {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.holiday-label {
+  color: #dc2626;
+}
 
 .today-dot {
   width: 26px;
@@ -268,6 +276,10 @@
 .legend-dot.sick {
   background: #fff7ed;
   border: 1px solid #fdba74;
+}
+.legend-dot.holiday {
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
 }
 
 /* ===== テーブル ===== */

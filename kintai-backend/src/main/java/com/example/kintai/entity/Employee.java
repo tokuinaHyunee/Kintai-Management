@@ -32,6 +32,9 @@ public class Employee {
     @Column(name = "active_flag", nullable = false, columnDefinition = "TINYINT")
     private Integer activeFlag = 1;
 
+    @Column(name = "annual_leave_total", nullable = false, columnDefinition = "INT DEFAULT 10")
+    private Integer annualLeaveTotal = 10;
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 

@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { attendanceApi, summaryApi, leaveApi } from "../../api/api";
-import type { User, WorkTimeRecord, MonthlySummary, LeaveRequest, LeaveType } from "../../types";
+import type { WorkTimeRecord, MonthlySummary, LeaveRequest, LeaveType } from "../../types";
 import { formatLocalDate, formatLocalMonth } from "../../utils/date";
 import { getErrMsg } from "../../utils/error";
 import { LEAVE_TYPE_OPTIONS, STATUS_BADGE } from "../../utils/labels";
+import { useAuthContext } from "../../contexts/AuthContext";
 import "./Dashboard.css";
 
-interface Props { user: User | null; }
-
-export default function Dashboard({ user }: Props) {
+export default function Dashboard() {
+  const { user } = useAuthContext();
   const [tab,              setTab]              = useState<"stamp" | "leave">("stamp");
   const [currentTime,      setCurrentTime]      = useState(new Date());
   const [todayRecord,      setTodayRecord]      = useState<WorkTimeRecord | null>(null);
@@ -173,7 +173,7 @@ export default function Dashboard({ user }: Props) {
             </div>
             <div className="stat-card">
               <div className="stat-label">有給休暇残日数</div>
-              <div className="stat-value blue">{summary?.paidLeaveDays ?? "—"}<span className="stat-unit">日</span></div>
+              <div className="stat-value blue">{summary?.remainingAnnualLeave ?? "—"}<span className="stat-unit">日</span></div>
             </div>
           </div>
 

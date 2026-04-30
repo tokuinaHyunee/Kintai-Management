@@ -2,21 +2,16 @@ package com.example.kintai.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "leave_request")
+@Table(name = "leave_request", indexes = {
+    @Index(name = "idx_lr_emp_status_date", columnList = "employee_id, status, leave_date"),
+    @Index(name = "idx_lr_status_created",  columnList = "status, created_at")
+})
 @Getter
 @Setter
 @NoArgsConstructor

@@ -12,7 +12,6 @@ export default function EmployeeMaster() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showForm, setShowForm] = useState(false);
-  const [showPwd,  setShowPwd]  = useState<Record<number, boolean>>({});
   const [submitting, setSubmitting] = useState(false);
   const [formMsg, setFormMsg] = useState({ text: "", type: "" });
   const [deleteConfirm, setDeleteConfirm] = useState<number | null>(null);
@@ -91,9 +90,6 @@ export default function EmployeeMaster() {
       setError(msg);
     }
   };
-
-  const togglePwd = (id: number) =>
-    setShowPwd((prev) => ({ ...prev, [id]: !prev[id] }));
 
   return (
     <div className="admin-accounts">
@@ -236,7 +232,6 @@ export default function EmployeeMaster() {
                 <th>社員番号</th>
                 <th>氏名</th>
                 <th>部署</th>
-                <th>パスワード</th>
                 <th>権限</th>
                 <th>状態</th>
                 <th>操作</th>
@@ -246,7 +241,7 @@ export default function EmployeeMaster() {
               {accounts.length === 0 ? (
                 <tr>
                   <td
-                    colSpan={7}
+                    colSpan={6}
                     style={{
                       textAlign: "center",
                       color: "var(--text4)",
@@ -264,26 +259,6 @@ export default function EmployeeMaster() {
                     </td>
                     <td className="name-cell">{a.employeeName}</td>
                     <td>{a.department ?? "—"}</td>
-                    <td>
-                      {a.role === "ADMIN" ? (
-                        <span style={{ color: "var(--text4)", fontSize: "12px" }}>—</span>
-                      ) : (
-                        <span className="pwd-cell">
-                          {showPwd[a.accountId] ? (
-                            <span className="mono">{a.passwordPlain ?? "—"}</span>
-                          ) : (
-                            <span className="pwd-mask">••••••••</span>
-                          )}
-                          <button
-                            className="btn-icon"
-                            onClick={() => togglePwd(a.accountId)}
-                            title={showPwd[a.accountId] ? "非表示" : "表示"}
-                          >
-                            {showPwd[a.accountId] ? "非表示" : "表示"}
-                          </button>
-                        </span>
-                      )}
-                    </td>
                     <td>
                       {a.role === "ADMIN" ? (
                         <span className="badge badge-admin">管理者</span>
